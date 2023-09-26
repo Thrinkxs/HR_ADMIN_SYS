@@ -16,13 +16,22 @@ const EmployeeSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     employeeManager: {
       type: String,
       required: true,
     },
     status: {
-      type: Boolean,
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
       required: true,
     },
   },

@@ -1,35 +1,46 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import EmployeeModel from "../models/Employee";
+import bcrypt from "bcrypt";
 
 const createEmployee = (req: Request, res: Response, next: NextFunction) => {
-  const { firstName, lastName, tel, email, employeeManager } = req.body;
-  const employee = new EmployeeModel({
-    _id: new mongoose.Types.ObjectId(),
-    firstName,
-    lastName,
-    tel,
-    email,
-    employeeManager,
-  });
+  const { firstName, lastName, tel, email, employeeManager, status } = req.body;
 
-  return employee
-    .save()
-    .then((newEmployee) => {
-      return res.status(201).json({
-        success: true,
-        message: "New employee created successfully",
-        Employee: newEmployee,
-      });
-    })
-    .catch((error) => {
-      console.log("Error: ", error);
-      res.status(500).json({
-        success: false,
-        message: "Server error. Please try again.",
-        error: error.message,
-      });
+  const saltRounds = 10;
+  bcrypt.hash("Password123#", saltRounds, (err, hash) => {
+    const employee = new EmployeeModel({
+      _id: new mongoose.Types.ObjectId(),
+      firstName,
+      lastName,
+      tel,
+      email,
+      employeeManager,
+      status,
+      password: hash,
+      role: "employee",
     });
+    if (err) {
+      console.error(err);
+    } else {
+      return employee
+        .save()
+        .then((newEmployee) => {
+          return res.status(201).json({
+            success: true,
+            message: "New employee created successfully",
+            Employee: newEmployee,
+          });
+        })
+        .catch((error) => {
+          console.log("Error: ", error);
+          res.status(500).json({
+            success: false,
+            message: "Server error. Please try again.",
+            error: error.message,
+          });
+        });
+    }
+  });
 };
 
 const readEmployee = (req: Request, res: Response, next: NextFunction) => {

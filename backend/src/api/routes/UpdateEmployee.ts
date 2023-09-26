@@ -3,6 +3,6 @@ import controller from "../controller/Employee";
 
 const router = express.Router();
 
-router.delete("api/delete/:employeeId", controller.deleteEmployee);
+router.patch("api/update/:employeeId", controller.updateEmployee);
 
 export = router;
