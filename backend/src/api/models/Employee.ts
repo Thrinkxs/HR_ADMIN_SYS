@@ -9,7 +9,7 @@ const EmployeeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    tel: {
+    phone: {
       type: Number,
       required: true,
     },
@@ -20,7 +20,7 @@ const EmployeeSchema = new mongoose.Schema(
     },
     employeeManager: {
       type: String,
-      required: true,
+      required: false,
     },
     status: {
       type: String,

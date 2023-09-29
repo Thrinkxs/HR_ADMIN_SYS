@@ -1,5 +1,5 @@
 {
-  "name": "hr-admin-system",
+  "name": "@hrpro/employee-management-system",
   "version": "1.0.0",
   "description": "An hr management system to manage both employees and managers in a company",
   "main": "index.js",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.4",
-    "@types/cors": "^2.8.14"
+    "@types/cors": "^2.8.14",
+    "@types/jsonwebtoken": "^9.0.3"
   }
 }

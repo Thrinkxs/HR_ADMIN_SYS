@@ -1,23 +1,22 @@
 import mongoose, { InferSchemaType } from "mongoose";
 
 const DeptSchema = new mongoose.Schema({
-  deptName: {
+  name: {
     type: String,
     required: true,
   },
-  deptManager: {
+  manager: {
     type: String,
     required: true,
   },
 
-  deptStatus: {
-    type: Boolean,
-    required: true,
+  status: {
+    type: String,
   },
 });
 
-type Dept = InferSchemaType<typeof DeptSchema>;
+type DeptModel = InferSchemaType<typeof DeptSchema>;
 
-const Dept = mongoose.model("Dept", DeptSchema);
+const DeptModel = mongoose.model("DeptModel", DeptSchema);
 
-export default Dept;
+export default DeptModel;

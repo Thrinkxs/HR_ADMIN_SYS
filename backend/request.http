@@ -1,0 +1,6 @@
+http://localhost:3001/api/create-department
+
+{
+    "name": "Marketing",
+    "manager": "Emmanuel"
+}

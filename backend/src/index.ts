@@ -5,12 +5,17 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { dbconfig } from "./config/dbconfig";
-import UserRoutes from "./api/routes/UserRouter";
-import LoginRoutes from "./api/routes/Login";
+import AdminLogin from "./api/routes/AdminLogin";
+import EmployeeLogin from "./api/routes/EmployeeLogin";
 import CreateEmployee from "./api/routes/CreateEmployee";
 import readEmployee from "./api/routes/getSingleEmployee";
 import readAllEmployee from "./api/routes/getAllEmployees";
-import routeArray from "./api/routes/UserRouter";
+import updateEmployee from "./api/routes/UpdateEmployee";
+// import deleteEmployee from "./api/routes/DeleteEmployee";
+import filterEmployee from "./api/routes/FliterEmployees";
+import createDepartment from "./api/routes/CreateDepartment";
+import updateDepartment from "./api/routes/UpdateDepartment";
+import readAllDepartment from "./api/routes/ReadDepartments";
 // import db from "./api/models";
 
 const app = express();
@@ -33,8 +38,11 @@ mongoose
   });
 
 //Routes
-//login route
-app.use("/api/login", LoginRoutes);
+//admin login route
+app.use("/api/login/admin", AdminLogin);
+
+//admin login route
+app.use("/api/login/employee", EmployeeLogin);
 
 //create employee route
 app.use("/api/create", CreateEmployee);
@@ -44,6 +52,24 @@ app.use("/api/get/employees/", readEmployee);
 
 //read all employee
 app.use("/api/get/employees", readAllEmployee);
+
+//update  employee
+app.use("/api/update/employees", updateEmployee);
+
+// //delete  employee
+// app.use("/api/delete/employees", deleteEmployee);
+
+//filter  employee
+app.use("/api/get/employees?", filterEmployee);
+
+//create department route
+app.use("/api/create-department", createDepartment);
+
+//update  department
+app.use("/api/update/departments", updateDepartment);
+
+//read all departments
+app.use("/api/get/departments", readAllDepartment);
 
 //Health check
 

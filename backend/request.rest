@@ -1,0 +1,19 @@
+POST http://localhost:3001/api/create-department HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Kunfu",
+  "manager": "Die",
+  "status": "active"
+}
+
+###
+PATCH  http://localhost:3001/api/update/departments/6514bc91a3caef26b4708eb6
+
+Content-Type: application/json
+
+{
+  "name": "Boy",
+  "manager": "Orlando",
+  "status": "die"
+}
