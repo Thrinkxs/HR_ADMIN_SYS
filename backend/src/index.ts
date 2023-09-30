@@ -17,6 +17,8 @@ import createDepartment from "./api/routes/CreateDepartment";
 import updateDepartment from "./api/routes/UpdateDepartment";
 import readAllDepartment from "./api/routes/ReadDepartments";
 // import db from "./api/models";
+//middleware auth guard
+import authenticateUser from "./api/middleware/AuthenticateUser";
 
 const app = express();
 const router = express();
@@ -45,7 +47,7 @@ app.use("/api/login/admin", AdminLogin);
 app.use("/api/login/employee", EmployeeLogin);
 
 //create employee route
-app.use("/api/create", CreateEmployee);
+app.use("/api/create", authenticateUser, CreateEmployee);
 
 //read single employee
 app.use("/api/get/employees/", readEmployee);
@@ -54,7 +56,7 @@ app.use("/api/get/employees/", readEmployee);
 app.use("/api/get/employees", readAllEmployee);
 
 //update  employee
-app.use("/api/update/employees", updateEmployee);
+app.use("/api/update/employees", authenticateUser, updateEmployee);
 
 // //delete  employee
 // app.use("/api/delete/employees", deleteEmployee);
@@ -63,10 +65,10 @@ app.use("/api/update/employees", updateEmployee);
 app.use("/api/get/employees?", filterEmployee);
 
 //create department route
-app.use("/api/create-department", createDepartment);
+app.use("/api/create-department", authenticateUser, createDepartment);
 
 //update  department
-app.use("/api/update/departments", updateDepartment);
+app.use("/api/update/departments", authenticateUser, updateDepartment);
 
 //read all departments
 app.use("/api/get/departments", readAllDepartment);

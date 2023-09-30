@@ -12,23 +12,20 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 type stateProps = {
-  username: string;
+  email: string;
   password: string;
 };
 
 const EmployeeLogin = () => {
   const [formData, setFormData] = useState<stateProps>({
-    username: "",
+    email: "",
     password: "",
   });
 
   const navigate = useNavigate();
 
   const schema: z.ZodType<stateProps> = z.object({
-    username: z
-      .string()
-      .min(16, { message: "Incorrect username" })
-      .max(16, { message: "Incorrect username" }),
+    email: z.string().email(),
     password: z
       .string()
       .min(12, { message: "Password length incorrect" })
@@ -59,7 +56,7 @@ const EmployeeLogin = () => {
       if (!res?.data || res.status !== 200) return alert("Invalid credentials");
       else {
         console.log("Login Success");
-        console.log(res);
+
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         reset();
@@ -85,16 +82,16 @@ const EmployeeLogin = () => {
             <div className="flex flex-col">
               <TextField
                 type="text"
-                id="outlined-basic"
-                label="Username"
+                id="email"
+                label="email"
                 variant="outlined"
-                {...register("username")}
-                name="username"
+                {...register("email")}
+                name="email"
                 onChange={handleInputChange}
               />
-              {errors.username && (
+              {errors.email && (
                 <span className="mx-4 italic text-red-400">
-                  {errors.username.message}
+                  {errors.email.message}
                 </span>
               )}
             </div>

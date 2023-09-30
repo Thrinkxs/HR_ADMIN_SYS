@@ -12,7 +12,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
 const Dashboard = () => {
   const { employeeData } = useEmployeeData();
   const { departmentData } = useDepartmentData();
@@ -21,81 +23,94 @@ const Dashboard = () => {
   const totalEmployees = Employees.length;
   const totalDepartments = Departments.length;
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    if (!employeeData && !departmentData) {
-      setIsLoading(true);
-    } else {
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const LoadScreen = () =>
+    setTimeout(() => {
       setIsLoading(false);
+    }, 2500);
+  useEffect(() => {
+    setIsLoading(true);
+    handleOpen();
+    if (Employees || Departments) {
+      LoadScreen();
     }
   }, []);
 
   return (
     <>
-      <div className="dashboard-container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-          <div className="p-4 bg-blue-200 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold">Total Employees</h2>
-            <p className="text-3xl font-bold">
-              {isLoading ? <p>Loading...</p> : totalEmployees}
-            </p>
-          </div>
-          <div className="p-4 bg-green-200 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold">Total Departments</h2>
-            <p className="text-3xl font-bold">
-              {" "}
-              {isLoading ? <p>Loading...</p> : totalDepartments}
-            </p>
-          </div>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>First Name</TableCell>
-                  <TableCell align="right">Last Name</TableCell>
-                  <TableCell align="right">Status</TableCell>
-                  <TableCell align="right">Department</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Employees.map((employee) => (
-                  <TableRow
-                    key={employee.firstName}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {employee.firstName}
-                    </TableCell>
-                    <TableCell align="right">{employee.lastName}</TableCell>
-                    <TableCell align="right">{employee.status}</TableCell>
-                    {/* 
-                {Departments.map((department) => {
-                  if (department.manager === employee.firstName) {
-                    return (
-                      <TableCell align="right" key={department._id}>
-                        {department.name}{" "}
-                      </TableCell>
-                    );
-                  }
-                  return null;
-                })} */}
-                    <TableCell align="right">
-                      {Departments.map((department) => {
-                        if (department.manager === employee.firstName) {
-                          return (
-                            <span key={department._id}>{department.name}</span>
-                          );
-                        }
-                        return null;
-                      })}
-                    </TableCell>
+      {isLoading ? (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      ) : (
+        <div className="dashboard-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+            <div className="p-4 bg-blue-200 rounded-lg shadow-md">
+              <h2 className="text-xl font-semibold">Total Employees</h2>
+              <p className="text-3xl font-bold">
+                {isLoading ? <p>Loading...</p> : totalEmployees}
+              </p>
+            </div>
+            <div className="p-4 bg-green-200 rounded-lg shadow-md">
+              <h2 className="text-xl font-semibold">Total Departments</h2>
+              <p className="text-3xl font-bold">
+                {" "}
+                {isLoading ? <p>Loading...</p> : totalDepartments}
+              </p>
+            </div>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>First Name</TableCell>
+                    <TableCell align="right">Last Name</TableCell>
+                    <TableCell align="right">Status</TableCell>
+                    <TableCell align="right">Department</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {Employees.map((employee) => (
+                    <TableRow
+                      key={employee.firstName}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {employee.firstName}
+                      </TableCell>
+                      <TableCell align="right">{employee.lastName}</TableCell>
+                      <TableCell align="right">{employee.status}</TableCell>
+
+                      <TableCell align="right">
+                        {Departments.map((department) => {
+                          if (department.manager === employee.firstName) {
+                            return (
+                              <span key={department._id}>
+                                {department.name}
+                              </span>
+                            );
+                          }
+                          return null;
+                        })}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

@@ -13,13 +13,7 @@ const Home = ({ children }: Props) => {
     <>
       <div className="flex">
         <SideBar />
-        <div className="bg-white flex flex-col">
-          {children}
-          {/* <Dashboard />
-          <CreateEmployees />
-          <EmployeeList />
-          <div>Here</div> */}
-        </div>
+        <div className="bg-white flex flex-col">{children}</div>
       </div>
     </>
   );

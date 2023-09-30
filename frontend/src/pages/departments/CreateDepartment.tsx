@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { MenuItem, Select, Backdrop } from "@mui/material";
 import { Axios } from "../../Axios";
 import useEmployeeData from "../../hooks/useEmployeeData";
+import { useNavigate } from "react-router-dom";
 
 type stateProps = {
   name: string;
@@ -23,12 +24,15 @@ const CreateDepartment = () => {
   const { employeeData } = useEmployeeData();
   const Employees = employeeData;
 
+  const navigate = useNavigate();
+
   const handleClose = () => {
     setOpen(false);
   };
   const handleOpen = () => {
     setOpen(true);
   };
+
   //Schema
   const schema: z.ZodType<stateProps> = z.object({
     name: z
@@ -56,6 +60,7 @@ const CreateDepartment = () => {
       [name]: value,
     }));
   };
+
   const handleManagerChange = (event) => {
     const selectedManager = event.target.value;
     setFormData((prevFormData) => ({
@@ -64,26 +69,20 @@ const CreateDepartment = () => {
     }));
     setManager(selectedManager);
   };
-  const handleDebug = () => {
-    console.log(formData);
-  };
+
+  //debug function
+
+  // const handleDebug = () => {
+  //   console.log(formData);
+  // };
+
   //handle submit/post to api
   const onSubmit = async () => {
     const updatedData = { ...formData };
-    console.log("Department data", updatedData);
-    console.log("other data", formData);
-    setSubmitting(true);
-    Axios.interceptors.request.use((config) => {
-      console.log("Request:", config);
-      return config;
-    });
 
-    Axios.interceptors.response.use((response) => {
-      console.log("Response:", response);
-      return response;
-    });
+    setSubmitting(true);
     try {
-      const response = await Axios.post("/api/create-department", updatedData);
+      const response = await Axios.post("/api/create-department", formData);
       console.log("API Response:", response.data);
 
       setSuccess(true);
@@ -143,8 +142,6 @@ const CreateDepartment = () => {
                 );
               }
             )}
-            {/* <MenuItem value="manager 1">Manager 1</MenuItem>
-            <MenuItem value="manager 2">Manager 2</MenuItem> */}
           </Select>
         </div>
 
@@ -157,7 +154,11 @@ const CreateDepartment = () => {
             {submitting ? "Saving..." : "Save"}
           </button>
           <button
-            onClick={handleDebug}
+            // onClick={handleDebug}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
             type="button"
             className="border p-1 px-2 rounded bg-red-400"
           >

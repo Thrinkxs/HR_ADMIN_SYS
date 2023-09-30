@@ -17,11 +17,10 @@ import ViewDepartment from "./pages/departments/ViewDepartment";
 import EditDepartment from "./pages/departments/EditDepartment";
 import AdminLogout from "./pages/login/logout/AdminLogout";
 import EmployeeLogout from "./pages/login/logout/EmployeeLogout";
+import NotFoundPage from "./pages/home/NotFoundPage";
 
 function App() {
   const { auth, setAuth, userRole, setUserRole } = useAuth();
-  console.log("APp component says", auth);
-  console.log("APp component says", userRole);
 
   return (
     <>
@@ -119,6 +118,7 @@ function App() {
                 )
               }
             />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </DataProvider>
       </main>
@@ -127,70 +127,3 @@ function App() {
 }
 
 export default App;
-
-// <AdminLogin />
-// {/* <CreateDepartment /> */}
-// {/* <Home> */}
-// <Routes>
-//   <Route path="/login/employee" element={<EmployeeLogin />} />
-//   <Route element={<Protected />}>
-//     <Route path="/" element={<AdminLogin />} />
-//     {/* <Route path="/login/employee" element={<EmployeeLogin />} /> */}
-//     <Route path="/dashboard" element={<Dashboard />} />
-//     <Route path="/view-all-employees" element={<EmployeeList />} />
-//     <Route path="/create-employee" element={<CreateEmployees />} />
-//     <Route path="/employees/:id/edit" element={<EditEmployee />} />
-//     <Route path="/settings" element={<Settings />} />
-//   </Route>
-//   <Route path="/" element={<Dashboard />} />
-// </Routes>
-// {/* </Home> */}
-
-// <Routes>
-// {/* Always render these routes */}
-// <Route path="/login/admin" element={<AdminLogin />} />
-// <Route path="/login/employee" element={<EmployeeLogin />} />
-
-// {/* Protected route */}
-// <Routes>
-//   <Route element={<Protected />}>
-//     <Route
-//       path="/dashboard"
-//       element={
-//         auth ? (
-//           <Home>
-//             <Route path="/" element={<Dashboard />} />
-//             <Route
-//               path="/view-all-employees"
-//               element={<EmployeeList />}
-//             />
-//             <Route
-//               path="/create-employee"
-//               element={<CreateEmployees />}
-//             />
-//             <Route
-//               path="/employees/:id/edit"
-//               element={<EditEmployee />}
-//             />
-//             <Route path="/settings" element={<Settings />} />
-//           </Home>
-//         ) : (
-//           // Redirect to login if not authenticated
-//           <Navigate to="/login/admin" />
-//         )
-//       }
-//     />
-//   </Route>
-// </Routes>
-// {/* Redirect to dashboard if authenticated */}
-// <Route
-//   path="/"
-//   element={
-//     auth ? (
-//       <Navigate to="/dashboard" />
-//     ) : (
-//       <Navigate to="/login/admin" />
-//     )
-//   }
-// />
-// </Routes>

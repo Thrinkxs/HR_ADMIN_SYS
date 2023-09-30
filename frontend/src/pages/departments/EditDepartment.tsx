@@ -4,12 +4,21 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MenuItem, Select } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-type stateProps = {};
+type stateProps = {
+  name: string;
+  surname: string;
+  phone: string;
+  email: string;
+  employeeManager: string;
+  role: string;
+  status: string;
+};
 
 const EditDepartment = () => {
   const [submitting, setSubmitting] = useState(false);
-
+  const navigate = useNavigate();
   //Schema
   const schema: z.ZodType<stateProps> = z.object({
     name: z.string().min(2).max(30),
@@ -18,7 +27,6 @@ const EditDepartment = () => {
     phone: z.number().min(10).max(10),
     manager: z.string().min(2).max(30),
     status: z.string().min(2).max(30),
-    // role: z.string().min(2).max(30),
   });
 
   const {
@@ -135,7 +143,14 @@ const EditDepartment = () => {
           >
             {submitting ? "Saving..." : "Save"}
           </button>
-          <button type="button" className="border p-1 px-2 rounded bg-red-400">
+          <button
+            type="button"
+            className="border p-1 px-2 rounded bg-red-400"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
             Cancel
           </button>
         </div>

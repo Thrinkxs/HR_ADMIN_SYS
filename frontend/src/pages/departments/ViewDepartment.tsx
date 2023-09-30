@@ -61,17 +61,8 @@ const ViewDepartment = () => {
       headerName: "Status ",
       width: 90,
     },
-    // {
-    //   field: "fullName",
-    //   headerName: "Full name",
-    //   description: "This column has a value getter and is not sortable.",
-    //   sortable: false,
-    //   width: 160,
-    //   valueGetter: (params: GridValueGetterParams) =>
-    //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    // },
   ];
-  console.log("This came from department", Departments);
+
   return (
     <>
       <h1 className="text-3xl py-6 mx-10"> Departments</h1>

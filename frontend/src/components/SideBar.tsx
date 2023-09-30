@@ -85,8 +85,6 @@ const SideBar = () => {
       )}
 
       <div className="inline-flex">
-        {/* <HiUserGroup className="bg-herobt text-2xl max-w-md w-10 rounded cursor-pointer block float-left mr-2" /> */}
-
         <div className="flex justify-start items-center mx-0 py-8">
           <img src={logo} alt="logo" />{" "}
           <h1

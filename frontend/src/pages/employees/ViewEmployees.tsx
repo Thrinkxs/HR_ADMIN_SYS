@@ -5,16 +5,37 @@ import { Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { Axios } from "../../Axios";
 
 const EmployeeList = () => {
   const { employeeData } = useEmployeeData();
   const Employees = employeeData;
   const getRowId = (employee) => employee._id;
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [status, setStatus] = useState("");
   const navigate = useNavigate();
+
   const handleEditClick = (employee) => {
     setSelectedEmployee(employee);
     navigate(`/employees/${employee._id}/edit`);
+  };
+
+  const handleDeactivate = (employeeId) => {
+    const updatedData = { status: "inactive" };
+
+    Axios.patch(`/api/employees/${employeeId}`, updatedData, {
+      withCredentials: true,
+    })
+      .then((response) => {
+        if (response.data.success) {
+          console.log("Employee deactivated");
+        } else {
+          console.log("Failed to update employee");
+        }
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
   };
 
   const buttonStyle = {
@@ -45,7 +66,7 @@ const EmployeeList = () => {
               variant="contained"
               color="primary"
               startIcon={<EditIcon />}
-              onClick={() => handleEditClick(params.row)}
+              onClick={() => handleDeactivate(params.row)}
               style={buttonStyle}
             >
               Deactivate
@@ -77,15 +98,6 @@ const EmployeeList = () => {
       headerName: "Status ",
       width: 90,
     },
-    // {
-    //   field: "fullName",
-    //   headerName: "Full name",
-    //   description: "This column has a value getter and is not sortable.",
-    //   sortable: false,
-    //   width: 160,
-    //   valueGetter: (params: GridValueGetterParams) =>
-    //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    // },
   ];
 
   return (

@@ -18,10 +18,9 @@ const useDepartmentData = () => {
         throw new Error("Network response was not ok");
       }
       const data: { Department: Department[] } = await response.data;
-      console.log("department response", data);
+
       setDepartmentData(data.Department);
-      console.log(data);
-      console.log(departmentData);
+
       localStorage.setItem("departmentData", JSON.stringify(data.Department)); //data.Department
     } catch (error) {
       console.error("Error fetching department data:", error);
@@ -33,7 +32,7 @@ const useDepartmentData = () => {
     if (storedData) {
       setDepartmentData(JSON.parse(storedData));
     }
-    //updates the local storage every 5 mins 5 * 60 * 1000
+    //updates the local storage every 5 mins 5 * 60 * 1000 || 5 secs, 5000
     const fetchInterval = setInterval(fetchData, 5000);
     return () => clearInterval(fetchInterval);
   }, []);

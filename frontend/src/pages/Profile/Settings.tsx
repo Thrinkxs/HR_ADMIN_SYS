@@ -93,7 +93,7 @@ const Settings = () => {
 
   return (
     <div className="">
-      <h1 className="text-3xl py-6 mx-10">Create Employee</h1>
+      <h1 className="text-3xl py-6 mx-10">Profile</h1>
 
       <form
         onSubmit={handleSubmit(onSubmit)}

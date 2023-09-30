@@ -19,20 +19,6 @@ const defaultValue = {
   setUser: () => {},
 } as unknown as LoginContextProps;
 
-// useEffect(() => {
-//   // const data = localStorage.getItem("Auth-State");
-//   const token = localStorage.getItem("token");
-//   if (token) {
-//     setAuth(true);
-//   }
-// }, []);
-
-// useEffect(() => {
-//   console.log("Updated Auth", auth);
-//   console.log("Updated userRole", userRole);
-//   localStorage.setItem("Auth-State", JSON.stringify(auth));
-// }, [auth]);
-
 export const LoginContext = createContext<LoginContextProps>(defaultValue);
 
 type Props = {

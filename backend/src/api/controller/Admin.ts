@@ -24,17 +24,11 @@ const saverAdminUser = () => {
 
 const loginAdmin = (req: Request, res: Response, next: NextFunction) => {
   const { username, password } = req.body;
-  // const createToken = (_id: string) => {
-  //   return jwt.sign({ _id }, process.env.JWT_SECRET, {
-  //     expiresIn: process.env.JWT_EXPIRES_IN,
-  //   });
-  // };
 
   userAdmin
     .findOne({
       username: username,
     })
-    // const token = createToken(username._id)
     .then(
       (
         user: {

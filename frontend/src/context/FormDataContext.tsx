@@ -13,7 +13,7 @@ export type stateProps = {
   role: string;
   status: string;
 };
-// React.Dispatch<React.SetStateAction
+
 export const DataProvider = ({ children }: DataProviderProps) => {
   const [data, setData] = useState<stateProps>({
     name: "",
@@ -33,5 +33,3 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 };
 
 export const useData = () => useContext(DataContext);
-
-//  firstName, lastName, tel, email, employeeManager, role

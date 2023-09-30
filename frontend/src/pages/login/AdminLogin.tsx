@@ -68,19 +68,15 @@ const AdminLogin = () => {
       if (!res?.data || res.status !== 200) return alert("Invalid credentials");
       else {
         console.log("Login Success");
-        console.log(res);
-        console.log("Before Auth", auth);
+
         setAuth(true);
-        console.log("After Auth", auth);
+
         setUser(res.data.user);
         localStorage.setItem("token", res.data.token);
         setUserRole(res.data.user.role);
         // const decodedUser = jwtDecode(res.data.token);
         const decodedUser = res.data.user.role;
         localStorage.setItem("user", JSON.stringify(decodedUser));
-
-        console.log("Auth", auth);
-        console.log("userRole", userRole);
         navigate("/dashboard");
 
         reset();
@@ -97,8 +93,6 @@ const AdminLogin = () => {
       setUserRole(JSON.parse(decodedUser));
       setUser(decodedUser);
       navigate("/dashboard");
-      // navigate(location.pathname);
-      console.log("this is the path", location.pathname);
     }
   }, []);
 
@@ -162,17 +156,6 @@ const AdminLogin = () => {
           >
             Login as Employee
           </Link>
-          {/* <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/login/employee");
-            }}
-          >
-            {" "}
-            Login as Employee
-          </button> */}
-          {/* <Navigate to="/login/employee" /> */}
         </form>
         <div className="bg-heroBg ">
           <img src={hero} alt="hero" />

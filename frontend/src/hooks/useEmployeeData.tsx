@@ -25,9 +25,7 @@ const useEmployeeData = () => {
       }
       const data: { Employee: Employee[] } = await response.data;
       setEmployeeData(data.Employee);
-      console.log(data);
 
-      console.log(employeeData);
       localStorage.setItem("employeeData", JSON.stringify(data.Employee));
     } catch (error) {
       console.error("Error fetching employee data:", error);
@@ -41,7 +39,7 @@ const useEmployeeData = () => {
       setEmployeeData(JSON.parse(storedData));
     }
 
-    //updates the local storage every 5 mins 5 * 60 * 1000
+    //updates the local storage every 5 mins 5 * 60 * 1000 || 5 secs
     const fetchInterval = setInterval(fetchData, 5000);
 
     return () => {

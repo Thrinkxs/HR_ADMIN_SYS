@@ -87,6 +87,11 @@ const EditEmployee = () => {
       [name]: value,
     }));
   };
+
+  const handleDebug = () => {
+    console.log("checking", employeeData.employeeData);
+  };
+
   const handleSelectionChange = (event) => {
     // setSelection(event.target.value);
     const { name, value } = event.target;
@@ -232,15 +237,18 @@ const EditEmployee = () => {
                 {/* Render the list of employees with role "manager" here */}
                 {/* <MenuItem value="manager1">Manager 1</MenuItem>
                 <MenuItem value="manager2">Manager 2</MenuItem> */}
-                {Employees.map((employee) => employee.role === "manager").map(
-                  (employee) => {
+                {employeeData.employeeData
+                  .map((employee) => employee.role === "manager")
+                  .map((employee) => {
                     return (
-                      <MenuItem key={employee._id} value={employee.firstName}>
+                      <MenuItem
+                        key={employee.employee._id}
+                        value={employee.firstName}
+                      >
                         {employee.firstName}
                       </MenuItem>
                     );
-                  }
-                )}
+                  })}
               </Select>
             )}
           </div>
@@ -274,10 +282,11 @@ const EditEmployee = () => {
             <button
               type="button"
               className="border p-1 px-2 rounded bg-red-400"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate(-1);
-              }}
+              // onClick={(e) => {
+              //   e.preventDefault();
+              //   navigate(-1);
+              // }}
+              onClick={handleDebug}
             >
               Cancel
             </button>

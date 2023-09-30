@@ -7,6 +7,7 @@ import { MenuItem, Select } from "@mui/material";
 import { Axios } from "../../Axios";
 import Backdrop from "@mui/material/Backdrop";
 import useEmployeeData from "../../hooks/useEmployeeData";
+import { useNavigate } from "react-router-dom";
 
 const CreateEmployees = () => {
   const { data, setData } = useData();
@@ -27,6 +28,7 @@ const CreateEmployees = () => {
     employeeManager: "",
   });
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const handleClose = () => {
     setOpen(false);
   };
@@ -257,7 +259,14 @@ const CreateEmployees = () => {
           >
             {submitting ? "Saving..." : "Save"}
           </button>
-          <button type="button" className="border p-1 px-2 rounded bg-red-400">
+          <button
+            type="button"
+            className="border p-1 px-2 rounded bg-red-400"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
             Cancel
           </button>
         </div>

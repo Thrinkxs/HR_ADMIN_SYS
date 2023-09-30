@@ -20,10 +20,10 @@ const filterEmployee = (
   // Use the query object to filter employees
   EmployeeModel.find(query)
     .then((employees) => {
-      res.json(employees); // Return the filtered employees as JSON response
+      res.json(employees);
     })
     .catch((error) => {
-      res.status(500).json({ error: "Internal Server Error" }); // Handle errors appropriately
+      res.status(500).json({ error: "Internal Server Error" });
     });
 };
 

@@ -22,7 +22,6 @@ const createEmployee = (req: Request, res: Response, next: NextFunction) => {
       status,
       password: hash,
       role,
-      // role: "employee",
     });
 
     if (err) {
@@ -62,11 +61,15 @@ const readEmployee = (req: Request, res: Response, next: NextFunction) => {
   return EmployeeModel.findById(employeeId)
     .exec()
     .then((employee) => {
+      const token = jwt.sign({ id: employee?._id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      });
       employee
         ? res.status(200).json({
             success: true,
             message: `Employee with ID = ${employeeId}`,
             Employee: employee,
+            token: token,
           })
         : res.status(404).json({
             message: "This employee does not exist",
@@ -86,6 +89,9 @@ const readAllEmployee = (req: Request, res: Response, next: NextFunction) => {
   return EmployeeModel.find({})
     .exec()
     .then((employees) => {
+      const token = jwt.sign({ employees }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      });
       res.status(200).json({
         success: true,
         message: "A list of all employees",
@@ -112,7 +118,11 @@ const updateEmployee = (req: Request, res: Response, next: NextFunction) => {
           message: "This employee does not exist",
         });
       } else {
+        const token = jwt.sign({ id: employee._id }, process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRES_IN,
+        });
         employee
+
           .set(req.body)
           .save()
           .then((employee) => {
@@ -120,6 +130,7 @@ const updateEmployee = (req: Request, res: Response, next: NextFunction) => {
               success: true,
               message: "Employee updated",
               Employee: employee,
+              token: token,
             });
           });
       }
